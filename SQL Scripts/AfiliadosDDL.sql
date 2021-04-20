@@ -1,0 +1,44 @@
+--CREATE DATABASE AffiliatesContext
+--GO
+
+--USE AffiliatesContext 
+--GO
+
+CREATE TABLE Status(
+Id INT IDENTITY(1,1) NOT NULL,
+Description VARCHAR(200) NOT NULL,
+
+CONSTRAINT PK_Status_Id PRIMARY KEY (Id)
+)
+GO
+
+CREATE TABLE InsurancePlan(
+Id INT IDENTITY(1,1) NOT NULL,
+Description VARCHAR(200) NOT NULL,
+CoverageLimit FLOAT NOT NULL,
+CreatedOn DATETIME NOT NULL DEFAULT GETDATE(),
+StatusId INT NOT NULL,
+
+CONSTRAINT PK_Plan_Id PRIMARY KEY (Id),
+CONSTRAINT FK_InsurancePlan_Status_StatusId FOREIGN KEY (StatusId) REFERENCES Status(Id)
+)
+GO
+
+CREATE TABLE Affiliate(
+Id INT IDENTITY(1,1) NOT NULL,
+Name VARCHAR(150) NOT NULL,
+LastName VARCHAR(150) NOT NULL,
+Genre CHAR NOT NULL,
+IdCard VARCHAR(11) NOT NULL,
+SocialSecurity VARCHAR(11) NOT NULL,
+SpendedAmount FLOAT NOT NULL,
+CreatedOn DATETIME NOT NULL DEFAULT GETDATE(),
+StatusId INT NOT NULL,
+InsurancePlanId INT NOT NULL,
+
+CONSTRAINT PK_Affiliate_Id PRIMARY KEY(Id),
+CONSTRAINT FK_Affiliate_Status_StatusId FOREIGN KEY (StatusId) REFERENCES Status(Id),
+CONSTRAINT FK_Affiliate_InsurancePlan_InsurancePlanId FOREIGN KEY (InsurancePlanId) REFERENCES InsurancePlan(Id) ON DELETE CASCADE,
+CONSTRAINT CHK_Genre CHECK (Genre IN ('F','M'))
+)
+GO

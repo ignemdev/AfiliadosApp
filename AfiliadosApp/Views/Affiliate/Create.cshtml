@@ -1,0 +1,57 @@
+﻿@model AfiliadosApp.ViewModels.AffiliateViewModel
+
+@{
+    ViewData["Title"] = "Agregando afiliado";
+}
+
+<section>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h4>Nuevo afiliado</h4>
+            <form asp-action="Create" class="p-3 shadow shadow-lg">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Affiliate.Name" class="control-label"></label>
+                    <input asp-for="Affiliate.Name" class="form-control" />
+                    <span asp-validation-for="Affiliate.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Affiliate.LastName" class="control-label"></label>
+                    <input asp-for="Affiliate.LastName" class="form-control" />
+                    <span asp-validation-for="Affiliate.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Affiliate.Genre" class="control-label"></label>
+                    @Html.DropDownListFor(a=>a.Affiliate.Genre,new SelectList(new[] {"F","M"}),htmlAttributes: new {@class="form-control"})
+                    <span asp-validation-for="Affiliate.Genre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Affiliate.IdCard" class="control-label"></label>
+                    <input asp-for="Affiliate.IdCard" class="form-control" />
+                    <span asp-validation-for="Affiliate.IdCard" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Affiliate.SocialSecurity" class="control-label"></label>
+                    <input asp-for="Affiliate.SocialSecurity" class="form-control" />
+                    <span asp-validation-for="Affiliate.SocialSecurity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Affiliate.InsurancePlanId" class="control-label"></label>
+                    @Html.DropDownListFor(a => a.Affiliate.InsurancePlanId, Model.InsurancePlans, htmlAttributes: new { @class = "form-control" })
+                    <span asp-validation-for="Affiliate.InsurancePlanId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </form>
+            <div>
+                <a asp-action="Index" class="btn btn-dark my-3">Volver</a>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

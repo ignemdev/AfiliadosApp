@@ -1,0 +1,65 @@
+﻿@model IEnumerable<AfiliadosApp.Models.InsurancePlan>
+
+@{
+    ViewData["Title"] = "Planes";
+}
+
+<section class="shadow shadow-lg">
+    <div class="card text-white bg-light rounded-0 rounded-top">
+        <div class="card-body">
+            <h5 class="card-title text-dark">Operaciones</h5>
+            <p class="card-text"><a asp-action="Create" class="btn btn-primary btn mx-2">Agregar</a></p>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead class="bg-primary text-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CoverageLimit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedOn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        $@Html.DisplayFor(modelItem => item.CoverageLimit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedOn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status.Description)
+                    </td>
+                    <td>
+                        @if (item.StatusId == 2)
+                        {
+                            <a asp-action="Activate" asp-route-id="@item.Id" class="btn btn-sm btn-success">Activar</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Deactivate" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Desactivar</a>
+                        } |
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Editar</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+
